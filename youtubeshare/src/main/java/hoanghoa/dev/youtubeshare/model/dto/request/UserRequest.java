@@ -6,7 +6,6 @@ import javax.validation.constraints.Pattern;
 public class UserRequest {
 
     @NotEmpty(message = "Email is required")
-    @Pattern(regexp = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}$", message = "Invalid email!")
     private String email;
     @NotEmpty(message = "Password us required")
     private String password;

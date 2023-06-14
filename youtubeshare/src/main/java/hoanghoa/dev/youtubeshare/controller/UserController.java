@@ -2,7 +2,6 @@ package hoanghoa.dev.youtubeshare.controller;
 
 import hoanghoa.dev.youtubeshare.model.dto.request.UserRequest;
 import hoanghoa.dev.youtubeshare.model.dto.response.UserLoginResponse;
-import hoanghoa.dev.youtubeshare.model.dto.response.UserRegisterResponse;
 import hoanghoa.dev.youtubeshare.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,12 +17,6 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
-
-    @PostMapping("register")
-    public UserRegisterResponse register(@Valid @RequestBody UserRequest request) {
-
-        return userService.saveUser(request);
-    }
 
     @PostMapping("login")
     public UserLoginResponse login(@Valid @RequestBody UserRequest request) {
