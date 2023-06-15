@@ -1,13 +1,13 @@
 <div class="shared-video">
   <div class="shared-video_item flex-div" *ngFor="let item of list; let i = index">
-    <div class="item-left flex-div">
+    <div id="video-iframe" class="item-left flex-div">
       <iframe
         width="560"
         height="315"
         [src]="getVideoUrl(item)"
         title="YouTube video player"
         frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allow="autoplay"
         allowfullscreen
       ></iframe>
     </div>

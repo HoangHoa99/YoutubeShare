@@ -20,9 +20,9 @@
         <legend>Share a Youtube movie</legend>
         <div class="url-input flex-div">
           <label for="ytb-url">Youtube URL:</label>
-        <input type="text" id="ytb-url" name="ytb-url" />
+          <input (change)="onLinkChange($event)" type="text" id="ytb-url" name="ytb-url" />
         </div>
-        <button>Share</button>
+        <button (click)="share($event)">Share</button>
       </fieldset>
     </div>
   </div>

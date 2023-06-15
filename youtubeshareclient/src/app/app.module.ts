@@ -9,6 +9,7 @@ import { HomePageService } from './home-page/home-page.service';
 import { HttpClientModule } from '@angular/common/http';
 import { VideoListComponent } from './video-list/video-list.component';
 import { ShareVideoComponent } from './share-video/share-video.component';
+import { ShareVideoService } from './share-video/share-video.service';
 
 
 @NgModule({
@@ -30,7 +31,7 @@ import { ShareVideoComponent } from './share-video/share-video.component';
         },
         vertical: {
           position: 'top',
-          distance: 12,
+          distance: 85,
           gap: 10
         }
       },
@@ -42,7 +43,7 @@ import { ShareVideoComponent } from './share-video/share-video.component';
       }
     })
   ],
-  providers: [HomePageService],
+  providers: [HomePageService, ShareVideoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

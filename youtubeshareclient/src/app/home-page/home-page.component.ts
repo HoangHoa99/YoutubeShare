@@ -16,6 +16,11 @@ export class HomePageComponent {
   password: string = '';
   private readonly notifier: NotifierService;
 
+  /** WS */
+  webSocketEndPoint: string = 'http://localhost:8080/ws';
+  topic: string = "/topic/greetings";
+  stompClient: any;
+
   constructor(private router: Router, private service: HomePageService, private notification: NotifierService) {
     this.notifier = notification;
   }
@@ -33,11 +38,10 @@ export class HomePageComponent {
   }
 
   handleSharedVideoResponse(data: any) {
-    if(data.error) {
+    if (data.error) {
       console.error("Error occur while fetching shared video ", data.message);
       return;
     }
-    console.log(JSON.stringify(data));
 
     this.sharedVideoList = data.sharedVideoList;
   }
@@ -68,13 +72,14 @@ export class HomePageComponent {
     this.password = '';
     let res = new LoginResponse(data);
 
-    if(res.getError) {
+    if (res.getError) {
       this.notifier.notify('failure', res.getMessage);
       return;
     }
 
     Globals.loginResponse = res;
     Globals.isUserLogin = true;
+    this.notifier.notify('success', `User ${res.getEmail} login successful`);
   }
 
   getLoginEmail() {
