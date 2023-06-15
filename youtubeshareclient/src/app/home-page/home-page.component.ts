@@ -4,6 +4,9 @@ import { NotifierService } from 'angular-notifier';
 import { Globals, LoginResponse } from '../common/globals';
 import { HomePageService } from './home-page.service';
 
+import { WebSocketAPI } from '../web-socket/web-socket-api';
+import { WebSocketShareService } from '../web-socket/web-socket-share.service';
+
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
@@ -16,18 +19,21 @@ export class HomePageComponent {
   password: string = '';
   private readonly notifier: NotifierService;
 
-  /** WS */
-  webSocketEndPoint: string = 'http://localhost:8080/ws';
-  topic: string = "/topic/greetings";
-  stompClient: any;
+  constructor(private router: Router, 
+    private service: HomePageService, 
+    private notification: NotifierService, 
+    private websocketService: WebSocketShareService, 
+    private webSocketAPI: WebSocketAPI) {
 
-  constructor(private router: Router, private service: HomePageService, private notification: NotifierService) {
     this.notifier = notification;
   }
 
   ngOnInit() {
     // load shared video here
     this.loadSharedVideoList();
+
+    this.webSocketAPI.connect();          
+    this.onNewValueReceive();
   }
 
   loadSharedVideoList() {
@@ -101,5 +107,31 @@ export class HomePageComponent {
 
     Globals.loginResponse.clear();
     Globals.isUserLogin = !Globals.isUserLogin;
+  }
+
+
+  connect() {
+    this.webSocketAPI.connect();
+  }
+  disconnect() {
+    this.webSocketAPI.disconnect();
+  }
+  // method to receive the updated data.
+  onNewValueReceive() {
+    this.websocketService.getNewValue().subscribe(data => {
+      this.notifyMessage(data);
+    });
+  }
+
+  notifyMessage(data: any) {
+    if(!data) {
+      return;
+    }
+
+    if(!Globals.isUserLogin) {
+      return;
+    }    
+    this.loadSharedVideoList();
+    this.notifier.notify('success', data);
   }
 }

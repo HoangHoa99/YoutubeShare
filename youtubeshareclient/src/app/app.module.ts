@@ -10,7 +10,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { VideoListComponent } from './video-list/video-list.component';
 import { ShareVideoComponent } from './share-video/share-video.component';
 import { ShareVideoService } from './share-video/share-video.service';
-
+import { WebSocketShareService } from './web-socket/web-socket-share.service';
+import { WebSocketAPI } from './web-socket/web-socket-api';
+import { YouTubePlayerModule } from '@angular/youtube-player';
 
 @NgModule({
   declarations: [
@@ -41,9 +43,10 @@ import { ShareVideoService } from './share-video/share-video.service';
         onClick: 'hide',
         onMouseover: 'pauseAutoHide',
       }
-    })
+    }),
+    YouTubePlayerModule
   ],
-  providers: [HomePageService, ShareVideoService],
+  providers: [HomePageService, ShareVideoService, WebSocketShareService, WebSocketAPI],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

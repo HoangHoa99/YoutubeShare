@@ -1,22 +1,19 @@
 <div class="shared-video">
-  <div class="shared-video_item flex-div" *ngFor="let item of list; let i = index">
+  <div class="shared-video_item flex-div" 
+  *ngFor="let item of list; let i = index">
     <div id="video-iframe" class="item-left flex-div">
-      <iframe
-        width="560"
-        height="315"
-        [src]="getVideoUrl(item)"
-        title="YouTube video player"
-        frameborder="0"
-        allow="autoplay"
-        allowfullscreen
-      ></iframe>
+      <youtube-player
+        [videoId]="getValue(item, 'videoId')"
+        [height]="315"
+        [width]="560">
+      </youtube-player>
     </div>
     <div class="item-right">
-      <h4 class="video-title">{{getValue(item, 'videoTitle')}}</h4>
-      <span>Shared by: {{getValue(item, 'email')}}</span>
+      <h4 class="video-title">{{ getValue(item, "videoTitle") }}</h4>
+      <span>Shared by: {{ getValue(item, "email") }}</span>
       <span>Description:</span>
       <p>
-        {{getValue(item, 'videoDescription')}}
+        {{ getValue(item, "videoDescription") }}
       </p>
     </div>
   </div>

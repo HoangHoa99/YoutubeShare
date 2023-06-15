@@ -64,8 +64,6 @@ export class ShareVideoComponent {
       this.notifier.notify('failure', data.message);
       return;
     }
-    this.notifier.notify('success', data.message);
-
     this.router.navigate([`home`]);
   }
 }
