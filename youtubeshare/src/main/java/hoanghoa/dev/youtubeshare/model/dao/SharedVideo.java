@@ -15,7 +15,7 @@ public class SharedVideo extends BaseEntity {
     private String videoId;
     @Column(name = "video_title")
     private String videoTitle;
-    @Column(name = "video_desc")
+    @Column(name = "video_desc", columnDefinition = "text")
     private String videoDescription;
     @Column(name = "video_platform")
     @Enumerated(value = EnumType.STRING)

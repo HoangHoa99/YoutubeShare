@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+
+  server:
+    container_name: youtubeshare
+    image: youtubeshare
+    environment:
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY}
+      GOOGLE_API_HOST: ${GOOGLE_API_HOST}
+      DB_PORT: 5432
+      DB_HOST: postgresqldb2
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+    build: ./
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgresqldb2
+  postgresqldb2:
+    container_name: postgres-ytb-db
+    image: postgres:15.3-alpine3.17
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=youtube-share
