@@ -10,12 +10,14 @@ import hoanghoa.dev.youtubeshare.model.dto.response.BaseResponse;
 import hoanghoa.dev.youtubeshare.model.dto.response.SharedVideoListResponse;
 import hoanghoa.dev.youtubeshare.repository.SharedVideoRepository;
 import hoanghoa.dev.youtubeshare.repository.UserRepository;
+import hoanghoa.dev.youtubeshare.service.INotifyService;
 import hoanghoa.dev.youtubeshare.service.IShareService;
 import hoanghoa.dev.youtubeshare.util.ExternalAPICallUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -30,6 +32,8 @@ public class ShareYoutubeUrlServiceImpl implements IShareService {
     private SharedVideoRepository sharedVideoRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private INotifyService notifyService;
 
     @Value("${google.api.key}")
     private String googleAPIKey;
@@ -60,6 +64,8 @@ public class ShareYoutubeUrlServiceImpl implements IShareService {
 
             String message = "Video has shared successfully!";
             baseResponse.setMessage(message);
+
+            this.notifyNewShared(sharedVideo.getEmail(), sharedVideo.getVideoTitle());
         }
         catch (Exception e) {
             LOGGER.error("Error occur while sharing video. Message: {}", e.getMessage());
@@ -75,7 +81,8 @@ public class ShareYoutubeUrlServiceImpl implements IShareService {
     public SharedVideoListResponse list() {
         SharedVideoListResponse response = new SharedVideoListResponse();
         try {
-            List<SharedVideo> sharedVideoList = sharedVideoRepository.findAll();
+            Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
+            List<SharedVideo> sharedVideoList = sharedVideoRepository.findAll(sort);
 
             response.setSharedVideoList(sharedVideoList);
         }
@@ -105,5 +112,10 @@ public class ShareYoutubeUrlServiceImpl implements IShareService {
         sharedVideo.setEmail(email);
 
         return sharedVideo;
+    }
+
+    private void notifyNewShared(String email, String videoTitle) {
+        String message = "[" + videoTitle + "] was shared by " + email;
+        this.notifyService.processMsg(message);
     }
 }
