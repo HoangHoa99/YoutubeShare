@@ -15,7 +15,9 @@ public class WebConfig  {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://localhost:4200");
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:4200",
+                                "http://ec2-13-213-37-115.ap-southeast-1.compute.amazonaws.com/");
             }
         };
     }
