@@ -1,13 +1,16 @@
 # YoutubeShare
 
+## Introduction
+
 This application allows the user to:
 - View the list of shared videos
 - Login/Register
 - Share movies you like (only Youtube share button link)
 
-## How to run locally
+## Prerequisites
+- Docker & docker-compose: Install & start docker & docker-compose (DIY, refer to the link: [Docker](https://www.docker.com/))
 
-Install & start docker & docker-compose (DIY, refer to the link: [Docker](https://www.docker.com/))
+## How to run locally
 
 Start the application locally
 
@@ -56,6 +59,16 @@ $ docker run -p 4200:4200 [your-docker-image-id || youtubeshare-client]
 ```
 Open the browser and access [http://localhost:4200](http://localhost:4200) to view the application
 
-## License
+## Usage
 
-[MIT](https://choosealicense.com/licenses/mit/)
+1. View the shared video list
+![Main page](https://github.com/HoangHoa99/YoutubeShare/assets/40349029/f984748c-b625-43e7-90cd-f2ed0745014b)
+
+2. Login/Register function
+![Login/Register](https://github.com/HoangHoa99/YoutubeShare/assets/40349029/417be1bc-e30f-4fd0-9e2e-2c6ba638bd8e)
+
+3. Share a movie or logout
+![Share a movie/Logout](https://github.com/HoangHoa99/YoutubeShare/assets/40349029/fa22d8d5-d137-4df5-9f8c-ff6834a7e9c5)
+
+4. Share a movie via video URL
+![Share a movie](https://github.com/HoangHoa99/YoutubeShare/assets/40349029/c0374511-6871-4296-a451-bc39b86934bb)
