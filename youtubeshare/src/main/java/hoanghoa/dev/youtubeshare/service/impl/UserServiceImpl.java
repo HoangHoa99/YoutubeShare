@@ -8,6 +8,7 @@ import hoanghoa.dev.youtubeshare.service.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +22,22 @@ public class UserServiceImpl implements IUserService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @Override
     public UserLoginResponse login(UserRequest request) {
         User existedUser = this.checkExistedUser(request.getEmail());
-        if(Objects.isNull(existedUser)) {
+        if(Objects.nonNull(existedUser)) {
+            boolean passMatch = encoder.matches(request.getPassword(), existedUser.getPassword());
+            if(!passMatch) {
+                UserLoginResponse response = new UserLoginResponse();
+                response.setError(true);
+                response.setMessage("Incorrect login info");
+
+                return response;
+            }
+        }
+        else {
             existedUser = this.saveUser(request);
         }
         UserLoginResponse response = new UserLoginResponse();
